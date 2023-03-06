@@ -10,6 +10,8 @@ Manager.cs(球面調和関数の算出)
 
 MeshManager.cs(球面調和関数のメッシュ表示)
 
+https://github.com/oshiruko0511/WaveFunction/issues/1#issue-1610874017
+
 RadialWave.cs(動径波動関数、波動関数の算出、波動関数のメッシュ表示)
 
 RadialWave.csの計算部分は完成していますが、表示部分が未完成です。
