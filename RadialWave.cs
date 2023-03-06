@@ -295,8 +295,8 @@ public class RadialWave : MonoBehaviour
         double z = 0;
         int e = 0;
         var hado = new double[N * N * N][];
-        var mika = new double[N * N * N][];
-        var seia = new double[N * N * N][];
+        var kakuno = new double[N * N * N][];
+        var saigai = new double[N * N * N][];
         int tt = 0;
 
         Debug.Log("Start");
@@ -316,8 +316,8 @@ public class RadialWave : MonoBehaviour
                         hado[tt] = new double[] { 0, 0, 0, 0, tt, 0 };
                     }
                     else hado[tt] = new double[] { Math.Pow(NWF.Wf(x, y, z, n, l, m, ZZ), 2), x, y, z, tt, 0 };
-                    mika[tt] = new double[] { 0, 0, 0, 0, 0, 0, 0, 0 };
-                    seia[tt] = new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0};
+                    kakuno[tt] = new double[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+                    saigai[tt] = new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0};
                     //hado[][5] 色データ＆色情報
                     if (NWF.Wf(x, y, z, n, l, m, ZZ) < 0)
                     {
@@ -347,148 +347,148 @@ public class RadialWave : MonoBehaviour
         {
             if (hado[o][0] > input_value)//== input_value)
             {
-                //ユーザ入力波動関数以上の座標格納(mika)
-                mika[e][0] = hado[o][0];
-                mika[e][1] = hado[o][1];
-                mika[e][2] = hado[o][2];
-                mika[e][3] = hado[o][3];
-                mika[e][7] = hado[o][5];//色
+                //ユーザ入力波動関数以上の座標格納(kakuno)
+                kakuno[e][0] = hado[o][0];
+                kakuno[e][1] = hado[o][1];
+                kakuno[e][2] = hado[o][2];
+                kakuno[e][3] = hado[o][3];
+                kakuno[e][7] = hado[o][5];//色
                 e++;
             }
         }
         
         int u = 0;
         //最外点抽出
-        //mika[g][4]が0より大きく、6未満であれば最外点としてメッシュの頂点にする
-        //mika[g][5]はtriangleの2点目
-        //mika[g][6]はtriangleの3点目
+        //kakuno[g][4]が0より大きく、6未満であれば最外点としてメッシュの頂点にする
+        //kakuno[g][5]はtriangleの2点目
+        //kakuno[g][6]はtriangleの3点目
         for (int g = 0; g < e; g++)
         {
             for (int h = 0; h < e; h++)
             {
                 if (g != h)//同じ頂点でなければ
                 {
-                    if ((mika[g][2] == mika[h][2]) && (mika[g][3] == mika[h][3]))
+                    if ((kakuno[g][2] == kakuno[h][2]) && (kakuno[g][3] == kakuno[h][3]))
                     {
-                        if (mika[g][1] == mika[h][1] - cp)
+                        if (kakuno[g][1] == kakuno[h][1] - cp)
                         {
-                            mika[g][4] += 1;
+                            kakuno[g][4] += 1;
                         }
-                        if (mika[g][1] == mika[h][1] + cp)
+                        if (kakuno[g][1] == kakuno[h][1] + cp)
                         {
-                            mika[g][4] += 1;
+                            kakuno[g][4] += 1;
 
                         }
                     }
-                    if ((mika[g][1] == mika[h][1]) && (mika[g][3] == mika[h][3]))
+                    if ((kakuno[g][1] == kakuno[h][1]) && (kakuno[g][3] == kakuno[h][3]))
                     {
-                        if (mika[g][2] == mika[h][2] - cp)
+                        if (kakuno[g][2] == kakuno[h][2] - cp)
                         {
-                            mika[g][4] += 1;
+                            kakuno[g][4] += 1;
 
                         }
-                        if (mika[g][2] == mika[h][2] + cp)
+                        if (kakuno[g][2] == kakuno[h][2] + cp)
                         {
-                            mika[g][4] += 1;
+                            kakuno[g][4] += 1;
 
                         }
                     }
-                    if ((mika[g][2] == mika[h][2]) && (mika[g][1] == mika[h][1]))
+                    if ((kakuno[g][2] == kakuno[h][2]) && (kakuno[g][1] == kakuno[h][1]))
                     {
-                        if (mika[g][3] == mika[h][3] - cp)
+                        if (kakuno[g][3] == kakuno[h][3] - cp)
                         {
-                            mika[g][4] += 1;
+                            kakuno[g][4] += 1;
                         }
-                        if (mika[g][3] == mika[h][3] + cp)
+                        if (kakuno[g][3] == kakuno[h][3] + cp)
                         {
-                            mika[g][4] += 1;
+                            kakuno[g][4] += 1;
 
                         }
                     }
                 }
             }
-                //Debug.Log("create mika >> o =" + mika[g][0] + ", x =" + mika[g][1] + ", y =" + mika[g][2] + ", z =" + mika[g][3] + ", e =" + mika[g][4]);
+                //Debug.Log("create kakuno >> o =" + kakuno[g][0] + ", x =" + kakuno[g][1] + ", y =" + kakuno[g][2] + ", z =" + kakuno[g][3] + ", e =" + kakuno[g][4]);
                 
-                //Debug.Log("頂点だよ☆ 頂点数 =" + g + " ☆");
+                //Debug.Log("頂点数 =" + g );
             
-            if (mika[g][4] > 0 && mika[g][4] < 6)//最外殻なら
+            if (kakuno[g][4] > 0 && kakuno[g][4] < 6)//最外殻なら
             {
-                seia[u][0] = mika[g][0];
-                seia[u][1] = mika[g][1];
-                seia[u][2] = mika[g][2];
-                seia[u][3] = mika[g][3];
-                seia[u][7] = mika[g][7];
-                //seia[u][7] = -mika[g][1];
-                //seia[u][8] = -mika[g][2];
-                //seia[u][9] = -mika[g][3];
+                saigai[u][0] = kakuno[g][0];
+                saigai[u][1] = kakuno[g][1];
+                saigai[u][2] = kakuno[g][2];
+                saigai[u][3] = kakuno[g][3];
+                saigai[u][7] = kakuno[g][7];
+                //saigai[u][7] = -kakuno[g][1];
+                //saigai[u][8] = -kakuno[g][2];
+                //saigai[u][9] = -kakuno[g][3];
 
                 u++;
                 /*
                 GameObject sphere = Instantiate(sphere_prefab);
-                sphere.transform.position = new Mathd.Vector3d(mika[g][1], mika[g][2], mika[g][3]);
+                sphere.transform.position = new Mathd.Vector3d(kakuno[g][1], kakuno[g][2], kakuno[g][3]);
                 sphere.name = "sphere" + g.ToString();
                 */
             }
-            Debug.Log("頂点だよ☆ 頂点数 u =" + u + " ☆");
+            Debug.Log("頂点数 u =" + u );
         }
 
         //triangles.add
-        void nagi(int a, int b)
+        void tri_add(int a, int b)
         {
-            if (seia[a][5] != 0)
+            if (saigai[a][5] != 0)
             {
-                seia[a][6] = b;
+                saigai[a][6] = b;
 
                 triangles.Add(a);
-                triangles.Add((int)seia[a][5]);
-                triangles.Add((int)seia[a][6]);
+                triangles.Add((int)saigai[a][5]);
+                triangles.Add((int)saigai[a][6]);
                 //triangles.Add(a);
-                //triangles.Add((int)seia[a][6]);
-                //triangles.Add((int)seia[a][5]);
+                //triangles.Add((int)saigai[a][6]);
+                //triangles.Add((int)saigai[a][5]);
 
 
             }
             /*
-            else if (seia[a][6] != 0)
+            else if (saigai[a][6] != 0)
             {
-                seia[a][7] = b;
-                triangles.Add((int)seia[a][7]);
-                triangles.Add((int)seia[a][5]);
+                saigai[a][7] = b;
+                triangles.Add((int)saigai[a][7]);
+                triangles.Add((int)saigai[a][5]);
                 triangles.Add(a);
 
             }*/
-            else seia[a][5] = b;
+            else saigai[a][5] = b;
         }
 
-        void hinata(int a, int b, int e,int cp)
+        void tri_6pt(int a, int b, int e,int cp)
         {
-            if (seia[a][e] == (seia[b][e] - cp))
+            if (saigai[a][e] == (saigai[b][e] - cp))
             {
-                nagi(a, b);
+                tri_add(a, b);
             }
-            if (seia[a][e] == (seia[b][e] + cp))
+            if (saigai[a][e] == (saigai[b][e] + cp))
             {
-                nagi(a, b);
+                tri_add(a, b);
             }
-            if (seia[a][e] == Math.Sqrt(2) * (seia[b][e] - cp))
+            if (saigai[a][e] == Math.Sqrt(2) * (saigai[b][e] - cp))
             {
-                nagi(a, b);
+                tri_add(a, b);
             }
-            if (seia[a][e] == Math.Sqrt(2) * (seia[b][e] + cp))
+            if (saigai[a][e] == Math.Sqrt(2) * (saigai[b][e] + cp))
             {
-                nagi(a, b);
+                tri_add(a, b);
             }
-            if (seia[a][e] == Math.Sqrt(3) * (seia[b][e] - cp))
+            if (saigai[a][e] == Math.Sqrt(3) * (saigai[b][e] - cp))
             {
-                nagi(a, b);
+                tri_add(a, b);
             }
-            if (seia[a][e] == Math.Sqrt(3) * (seia[b][e] + cp))
+            if (saigai[a][e] == Math.Sqrt(3) * (saigai[b][e] + cp))
             {
-                nagi(a, b);
+                tri_add(a, b);
             }
         }
 
-        void mine(int a, int b, int c)
+        void tri_if_6pt(int a, int b, int c)
         {
             int d, e;
             if(c == 1)
@@ -506,165 +506,165 @@ public class RadialWave : MonoBehaviour
                 d = 1;
                 e = 3;
             }
-            if (seia[a][d] == (seia[b][d] - cp))
+            if (saigai[a][d] == (saigai[b][d] - cp))
             {
-                hinata(a, b, e, cp);
+                tri_6pt(a, b, e, cp);
             }
-            if (seia[a][d] == (seia[b][d] + cp))
+            if (saigai[a][d] == (saigai[b][d] + cp))
             {
-                hinata(a, b, e, cp);
+                tri_6pt(a, b, e, cp);
             }
-            if (seia[a][d] == Math.Sqrt(2) * (seia[b][d] - cp))
+            if (saigai[a][d] == Math.Sqrt(2) * (saigai[b][d] - cp))
             {
-                hinata(a, b, e, cp);
+                tri_6pt(a, b, e, cp);
             }
-            if (seia[a][d] == Math.Sqrt(2) * (seia[b][d] + cp))
+            if (saigai[a][d] == Math.Sqrt(2) * (saigai[b][d] + cp))
             {
-                hinata(a, b, e, cp);
+                tri_6pt(a, b, e, cp);
             }
-            if (seia[a][d] == Math.Sqrt(3) * (seia[b][d] - cp))
+            if (saigai[a][d] == Math.Sqrt(3) * (saigai[b][d] - cp))
             {
-                hinata(a, b, e, cp);
+                tri_6pt(a, b, e, cp);
             }
-            if (seia[a][d] == Math.Sqrt(3) * (seia[b][d] + cp))
+            if (saigai[a][d] == Math.Sqrt(3) * (saigai[b][d] + cp))
             {
-                hinata(a, b, e, cp);
+                tri_6pt(a, b, e, cp);
             }
         }
 
-        void mari(int a, int b)
+        void four_loop(int a, int b)
         {
             for(int d = 1; d < 4 ; d++)
             {
-                if (seia[a][d] == (seia[b][d] - cp))
+                if (saigai[a][d] == (saigai[b][d] - cp))
                 {
-                    mine(a, b, d);
+                    tri_if_6pt(a, b, d);
                 }
-                if (seia[a][d] == (seia[b][d] + cp))
+                if (saigai[a][d] == (saigai[b][d] + cp))
                 {
-                    mine(a, b, d);
+                    tri_if_6pt(a, b, d);
                 }
-                if (seia[a][d] == Math.Sqrt(2) * (seia[b][d] - cp))
+                if (saigai[a][d] == Math.Sqrt(2) * (saigai[b][d] - cp))
                 {
-                    mine(a, b, d);
+                    tri_if_6pt(a, b, d);
                 }
-                if (seia[a][d] == Math.Sqrt(2) * (seia[b][d] + cp))
+                if (saigai[a][d] == Math.Sqrt(2) * (saigai[b][d] + cp))
                 {
-                    mine(a, b, d);
+                    tri_if_6pt(a, b, d);
                 }
-                if (seia[a][d] == Math.Sqrt(3) * (seia[b][d] - cp))
+                if (saigai[a][d] == Math.Sqrt(3) * (saigai[b][d] - cp))
                 {
-                    mine(a, b, d);
+                    tri_if_6pt(a, b, d);
                 }
-                if (seia[a][d] == Math.Sqrt(3) * (seia[b][d] + cp))
+                if (saigai[a][d] == Math.Sqrt(3) * (saigai[b][d] + cp))
                 {
-                    mine(a, b, d);
+                    tri_if_6pt(a, b, d);
                 }
             }
         }
         
-        //seia[][8]作成
-        void azusa(int a, int b,int cp)
+        //saigai[][8]作成
+        void mk8(int a, int b,int cp)
         {
-            int hina = 0;
-            int ako = 0;
-            int iori = 0;
-            if (seia[a][6] != 0)
+            int zon = 0;
+            int krt = 0;
+            int mj = 0;
+            if (saigai[a][6] != 0)
             {
                 for (int lol = 1; lol < 4; lol++)
                 {
                     if (lol == 1)
                     {
-                        hina = 1;
-                        ako = 2;
-                        iori = 3;
+                        zon = 1;
+                        krt = 2;
+                        mj = 3;
                     }
                     else if (lol == 2)
                     {
-                        hina = 2;
-                        ako = 3;
-                        iori = 1;
+                        zon = 2;
+                        krt = 3;
+                        mj = 1;
                     }
                     else
                     {
-                        hina = 3;
-                        ako = 1;
-                        iori = 2;
+                        zon = 3;
+                        krt = 1;
+                        mj = 2;
                     }
-                    if (seia[a][hina] == seia[b][hina] - cp)
+                    if (saigai[a][zon] == saigai[b][zon] - cp)
                     {
-                        if (seia[a][ako] == seia[b][ako] - cp)
+                        if (saigai[a][krt] == saigai[b][krt] - cp)
                         {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
                         }
-                        if (seia[a][ako] == seia[b][ako] + cp)
+                        if (saigai[a][krt] == saigai[b][krt] + cp)
                         {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
                         }
-                        if (seia[a][ako] == Math.Sqrt(2) * (seia[b][ako] - cp))
+                        if (saigai[a][krt] == Math.Sqrt(2) * (saigai[b][krt] - cp))
                         {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
                         }
-                        if (seia[a][ako] == Math.Sqrt(2) * (seia[b][ako] + cp))
+                        if (saigai[a][krt] == Math.Sqrt(2) * (saigai[b][krt] + cp))
                         {
-                            seia[a][8] = b;
-                        }
-                    }
-                    if (seia[a][hina] == seia[b][hina] + cp)
-                    {
-                        if (seia[a][ako] == seia[b][ako] - cp)
-                        {
-                            seia[a][8] = b;
-                        }
-                        if (seia[a][ako] == seia[b][ako] + cp)
-                        {
-                            seia[a][8] = b;
-                        }
-                        if (seia[a][ako] == Math.Sqrt(2) * (seia[b][ako] - cp))
-                        {
-                            seia[a][8] = b;
-                        }
-                        if (seia[a][ako] == Math.Sqrt(2) * (seia[b][ako] + cp))
-                        {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
                         }
                     }
-                    if (seia[a][hina] == seia[b][hina] - cp)
+                    if (saigai[a][zon] == saigai[b][zon] + cp)
                     {
-                        if (seia[a][iori] == seia[b][iori] - cp)
+                        if (saigai[a][krt] == saigai[b][krt] - cp)
                         {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
                         }
-                        if (seia[a][iori] == seia[b][iori] + cp)
+                        if (saigai[a][krt] == saigai[b][krt] + cp)
                         {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
                         }
-                        if (seia[a][iori] == Math.Sqrt(2) * (seia[b][iori] - cp))
+                        if (saigai[a][krt] == Math.Sqrt(2) * (saigai[b][krt] - cp))
                         {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
                         }
-                        if (seia[a][iori] == Math.Sqrt(2) * (seia[b][iori] + cp))
+                        if (saigai[a][krt] == Math.Sqrt(2) * (saigai[b][krt] + cp))
                         {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
                         }
                     }
-                    if (seia[a][hina] == seia[b][hina] + cp)
+                    if (saigai[a][zon] == saigai[b][zon] - cp)
                     {
-                        if (seia[a][iori] == seia[b][iori] - cp)
+                        if (saigai[a][mj] == saigai[b][mj] - cp)
                         {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
                         }
-                        if (seia[a][iori] == seia[b][iori] + cp)
+                        if (saigai[a][mj] == saigai[b][mj] + cp)
                         {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
                         }
-                        if (seia[a][iori] == Math.Sqrt(2) * (seia[b][iori] - cp))
+                        if (saigai[a][mj] == Math.Sqrt(2) * (saigai[b][mj] - cp))
                         {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
                         }
-                        if (seia[a][iori] == Math.Sqrt(2) * (seia[b][iori] + cp))
+                        if (saigai[a][mj] == Math.Sqrt(2) * (saigai[b][mj] + cp))
                         {
-                            seia[a][8] = b;
+                            saigai[a][8] = b;
+                        }
+                    }
+                    if (saigai[a][zon] == saigai[b][zon] + cp)
+                    {
+                        if (saigai[a][mj] == saigai[b][mj] - cp)
+                        {
+                            saigai[a][8] = b;
+                        }
+                        if (saigai[a][mj] == saigai[b][mj] + cp)
+                        {
+                            saigai[a][8] = b;
+                        }
+                        if (saigai[a][mj] == Math.Sqrt(2) * (saigai[b][mj] - cp))
+                        {
+                            saigai[a][8] = b;
+                        }
+                        if (saigai[a][mj] == Math.Sqrt(2) * (saigai[b][mj] + cp))
+                        {
+                            saigai[a][8] = b;
                         }
                     }
                 }
@@ -678,86 +678,86 @@ public class RadialWave : MonoBehaviour
             {
                 if (a != b)//同じ頂点でなければ
                 {
-                    if ((seia[a][2] == seia[b][2]) && (seia[a][3] == seia[b][3]))
+                    if ((saigai[a][2] == saigai[b][2]) && (saigai[a][3] == saigai[b][3]))
                     {
-                        if (seia[a][1] == (seia[b][1] - cp))
+                        if (saigai[a][1] == (saigai[b][1] - cp))
                         {
-                            seia[a][5] = b;
+                            saigai[a][5] = b;
                         }
-                        if (seia[a][1] ==  (seia[b][1] + cp))
+                        if (saigai[a][1] ==  (saigai[b][1] + cp))
                         {
-                            nagi(a, b);
+                            tri_add(a, b);
                         }
-                        if (seia[a][1] == Math.Sqrt(2) * (seia[b][1] - cp))
+                        if (saigai[a][1] == Math.Sqrt(2) * (saigai[b][1] - cp))
                         {
-                            nagi(a, b);
+                            tri_add(a, b);
                         }
-                        if (seia[a][1] == Math.Sqrt(2) * (seia[b][1] + cp))
+                        if (saigai[a][1] == Math.Sqrt(2) * (saigai[b][1] + cp))
                         {
-                            nagi(a, b);
+                            tri_add(a, b);
                         }
                     }
-                    if ((seia[a][1] == seia[b][1]) && (seia[a][3] == seia[b][3]))
+                    if ((saigai[a][1] == saigai[b][1]) && (saigai[a][3] == saigai[b][3]))
                     {
-                        if (seia[a][2] ==  (seia[b][2] - cp))
+                        if (saigai[a][2] ==  (saigai[b][2] - cp))
                         {
-                            nagi(a, b);
+                            tri_add(a, b);
                         }
-                        if (seia[a][2] ==  (seia[b][2] + cp))
+                        if (saigai[a][2] ==  (saigai[b][2] + cp))
                         {
-                            nagi(a, b);
+                            tri_add(a, b);
                         }
-                        if (seia[a][2] == Math.Sqrt(2) * (seia[b][2] - cp))
+                        if (saigai[a][2] == Math.Sqrt(2) * (saigai[b][2] - cp))
                         {
-                            nagi(a, b);
+                            tri_add(a, b);
                         }
-                        if (seia[a][2] == Math.Sqrt(2) * (seia[b][2] + cp))
+                        if (saigai[a][2] == Math.Sqrt(2) * (saigai[b][2] + cp))
                         {
-                            nagi(a, b);
+                            tri_add(a, b);
                         }
                     }
-                    if ((seia[a][2] == seia[b][2]) && (seia[a][1] == seia[b][1]))
+                    if ((saigai[a][2] == saigai[b][2]) && (saigai[a][1] == saigai[b][1]))
                     {
-                        if (seia[a][3] ==  (seia[b][3] - cp))
+                        if (saigai[a][3] ==  (saigai[b][3] - cp))
                         {
-                            nagi(a, b);
+                            tri_add(a, b);
 
                         }
-                        if (seia[a][3] ==  (seia[b][3] + cp))
+                        if (saigai[a][3] ==  (saigai[b][3] + cp))
                         {
-                            nagi(a, b);
+                            tri_add(a, b);
 
                         }
-                        if (seia[a][3] == Math.Sqrt(2) * (seia[b][3] - cp))
+                        if (saigai[a][3] == Math.Sqrt(2) * (saigai[b][3] - cp))
                         {
-                            nagi(a, b);
+                            tri_add(a, b);
                         }
-                        if (seia[a][3] == Math.Sqrt(2) * (seia[b][3] + cp))
+                        if (saigai[a][3] == Math.Sqrt(2) * (saigai[b][3] + cp))
                         {
-                            nagi(a, b);
+                            tri_add(a, b);
                         }
                     }
-                    if (seia[a][2] == seia[b][2])
+                    if (saigai[a][2] == saigai[b][2])
                     {
-                        mine(a, b, 2);
+                        tri_if_6pt(a, b, 2);
                     }
-                    if (seia[a][3] == seia[b][3])
+                    if (saigai[a][3] == saigai[b][3])
                     {
-                        mine(a, b, 3);
+                        tri_if_6pt(a, b, 3);
                     }
-                    if (seia[a][1] == seia[b][1])
+                    if (saigai[a][1] == saigai[b][1])
                     {
-                        mine(a, b, 1);   
+                        tri_if_6pt(a, b, 1);   
                     }
-                    mari(a, b);
+                    four_loop(a, b);
                     /*
-                    azusa(a, b, cp);
+                    mk8(a, b, cp);
                     triangles.Add(a);
-                    triangles.Add((int)seia[a][5]);
-                    triangles.Add((int)seia[a][6]);
+                    triangles.Add((int)saigai[a][5]);
+                    triangles.Add((int)saigai[a][6]);
                     triangles.Add(a);
-                    triangles.Add((int)seia[a][6]);
-                    triangles.Add((int)seia[a][8]);
+                    triangles.Add((int)saigai[a][6]);
+                    triangles.Add((int)saigai[a][8]);
                     */
                 }
             }
@@ -769,10 +769,10 @@ public class RadialWave : MonoBehaviour
             //頂点としてvertex.addする
             /*
             GameObject sphere = Instantiate(sphere_prefab);
-            sphere.transform.position = new UnityEngine.Vector3((float)seia[v][1] , (float)seia[v][2] - 2 , (float)seia[v][3] );
+            sphere.transform.position = new UnityEngine.Vector3((float)saigai[v][1] , (float)saigai[v][2] - 2 , (float)saigai[v][3] );
             sphere.name = "sphere" + v.ToString();
             */
-            vertices.Add(new UnityEngine.Vector3((float)seia[v][1], (float)seia[v][2], (float)seia[v][3]));//頂点の位置
+            vertices.Add(new UnityEngine.Vector3((float)saigai[v][1], (float)saigai[v][2], (float)saigai[v][3]));//頂点の位置
         }
 
         mesh.SetVertices(vertices);         // メッシュに頂点を登録する
@@ -791,7 +791,7 @@ public class RadialWave : MonoBehaviour
         for (int ti = 0; ti < u ; ti++)
         {
             // 色
-            if (seia[ti][7] == 1)
+            if (saigai[ti][7] == 1)
             {
                 vertexColors[ti] = Color.red;
             }
